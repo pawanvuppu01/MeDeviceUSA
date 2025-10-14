@@ -1,25 +1,23 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ChatWidget from "@/components/ChatWidget";
-import NextAuthSessionProvider from "./providers/SessionProvider";
 
 export const metadata = {
-  title: "Alovera Hospital",
-  description: "Alovera Hospital Management System",
+  title: "MeDeviceUSA",
+  description: "Innovative Medical Device Consulting & Solutions",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className="bg-white text-gray-800">
-        <NextAuthSessionProvider>
-          {/* ✅ Always render Navbar at top */}
-          <Navbar />
-          <main className="pt-20 min-h-screen">{children}</main>
-          <Footer />
-          <ChatWidget />
-        </NextAuthSessionProvider>
+      <body className="pt-20 flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow">{children}</main>
+        <Footer />
       </body>
     </html>
   );

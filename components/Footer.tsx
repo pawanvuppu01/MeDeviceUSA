@@ -1,48 +1,65 @@
-"use client";
-import React from "react";
-import Link from "next/link";
-
 export default function Footer() {
   return (
-    <footer className="bg-green-700 text-white mt-16">
-      <div className="container mx-auto px-6 py-10 grid md:grid-cols-4 sm:grid-cols-2 gap-8">
-        <div>
-          <h3 className="text-xl font-semibold mb-3">Alovera Hospital</h3>
-          <p className="text-sm leading-6">
-            Healing through nature — modern care powered by Ayurveda and technology.
-          </p>
+    <footer className="bg-blue-900 text-white text-center py-8 mt-16">
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Top: Contact / Info */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 text-sm">
+          <div>
+            <h4 className="font-semibold text-lg mb-2">MeDeviceUSA</h4>
+            <p>
+              Accelerating healthcare innovation through advanced medical device
+              design, regulatory expertise, and clinical excellence.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-lg mb-2">Contact</h4>
+            <p>Denton, Texas, USA</p>
+            <p>📞 +1 (940) 627-5153</p>
+            <p>✉️ info@medeviceusa.com</p>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-lg mb-2">Quick Links</h4>
+            <ul className="space-y-1">
+              <li>
+                <a href="/about" className="hover:underline">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="/services" className="hover:underline">
+                  Services
+                </a>
+              </li>
+              <li>
+                <a href="/training" className="hover:underline">
+                  Training
+                </a>
+              </li>
+              <li>
+                <a href="/contact" className="hover:underline">
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div>
-          <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/about">About Us</Link></li>
-            <li><Link href="/doctors">Doctors</Link></li>
-            <li><Link href="/appointments">Appointments</Link></li>
-          </ul>
-        </div>
+        {/* Divider */}
+        <div className="border-t border-blue-700 my-4"></div>
 
-        <div>
-          <h3 className="text-lg font-semibold mb-3">Departments</h3>
-          <ul className="space-y-2 text-sm">
-            <li>General Medicine</li>
-            <li>Dermatology</li>
-            <li>Physiotherapy</li>
-            <li>Pediatrics</li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="text-lg font-semibold mb-3">Contact</h3>
-          <p className="text-sm">📍 Denton, Texas, USA</p>
-          <p className="text-sm">📞 +1 (940) 629-9145</p>
-          <p className="text-sm">✉️ info@aloverahospital.com</p>
-        </div>
-      </div>
-
-      <div className="bg-green-800 text-center text-xs py-3 border-t border-green-600">
-        © {new Date().getFullYear()} Alovera Hospital. All rights reserved.
+        {/* Bottom copyright */}
+        <p className="text-sm">
+          © {new Date().getFullYear()} MeDeviceUSA. All rights reserved. | 
+          <a href="/privacy-policy" className="hover:underline">
+            Privacy Policy
+          </a>{" "}
+          |{" "}
+          <a href="/terms" className="hover:underline">
+            Terms of Service
+          </a>
+        </p>
       </div>
     </footer>
   );

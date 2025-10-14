@@ -1,47 +1,91 @@
+// Prisma Schema for MeDeviceUSA
+// Includes Hospital (Doctors, Patients, Appointments) + Authentication Models
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = env("DATABASE_URL")
 }
 
+// ==========================
+// 🏥 Core Hospital Models
+// ==========================
 model Doctor {
-  id          Int          @id @default(autoincrement())
-  name        String
-  specialty   String
-  createdAt   DateTime     @default(now())
+  id           Int            @id @default(autoincrement())
+  name         String
+  specialty    String
+  phone        String
+  patients     Patient[]
+  appointments Appointment[]
+}
+
+model Patient {
+  id           Int            @id @default(autoincrement())
+  name         String
+  age          Int
+  doctorId     Int
+  doctor       Doctor          @relation(fields: [doctorId], references: [id])
   appointments Appointment[]
 }
 
 model Appointment {
-  id          Int      @id @default(autoincrement())
-  fullName    String
-  email       String
-  date        DateTime
-  department  String
-  message     String?
-  doctorId    Int?
-  doctor      Doctor?  @relation(fields: [doctorId], references: [id])
-  createdAt   DateTime @default(now())
+  id         Int       @id @default(autoincrement())
+  date       DateTime
+  time       String
+  doctorId   Int
+  patientId  Int
+  doctor     Doctor    @relation(fields: [doctorId], references: [id])
+  patient    Patient   @relation(fields: [patientId], references: [id])
 }
 
-model Message {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String
-  content   String
-  createdAt DateTime @default(now())
-}
+// ==========================
+// 🔐 Authentication Models
+// ==========================
 
 model User {
-  id                String   @id @default(cuid())
-  name              String?
-  email             String?  @unique
-  phone             String?  @unique
-  password          String
-  verificationCode  String?
-  isVerified        Boolean  @default(false)
-  createdAt         DateTime @default(now())
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  sessions      Session[]
+  accounts      Account[]
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?     // ✅ fixed for SQLite (no @db.Text)
+  access_token       String?     // ✅
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?     // ✅
+  session_state      String?
+  user               User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
