@@ -1,53 +1,49 @@
 "use client";
-import { useState } from "react";
+
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const res = await signIn("credentials", {
-      redirect: false,
-      email: form.email,
-      password: form.password,
+    await signIn("credentials", {
+      email,
+      password,
+      redirect: true,
+      callbackUrl: "/dashboard",
     });
-    if (res?.error) setError("Invalid email or password");
-    else router.push("/dashboard");
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="flex items-center justify-center h-screen bg-gray-900 text-white">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-lg p-8 rounded-xl w-full max-w-sm space-y-6 border"
+        className="bg-gray-800 p-8 rounded-2xl w-96 shadow-lg"
       >
-        <h1 className="text-2xl font-bold text-center text-blue-700">
-          MeDeviceUSA Admin Login
-        </h1>
-        {error && <p className="text-red-600 text-center">{error}</p>}
+        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+
         <input
-          type="email"
+          type="text"
           placeholder="Email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          className="border p-2 rounded w-full"
-          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full p-2 mb-3 rounded bg-gray-700 focus:outline-none"
         />
+
         <input
           type="password"
           placeholder="Password"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-          className="border p-2 rounded w-full"
-          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-2 mb-5 rounded bg-gray-700 focus:outline-none"
         />
+
         <button
           type="submit"
-          className="bg-blue-700 text-white w-full py-2 rounded hover:bg-blue-800 transition"
+          className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded text-white font-semibold"
         >
           Login
         </button>
@@ -55,3 +51,4 @@ export default function LoginPage() {
     </div>
   );
 }
+ 

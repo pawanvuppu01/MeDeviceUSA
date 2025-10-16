@@ -41,9 +41,6 @@ importers:
       openai:
         specifier: ^6.1.0
         version: 6.3.0
-      prisma:
-        specifier: ^6.16.3
-        version: 6.17.1(typescript@5.9.3)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -75,6 +72,9 @@ importers:
       eslint-config-next:
         specifier: 15.5.4
         version: 15.5.4(eslint@9.37.0(jiti@2.6.1))(typescript@5.9.3)
+      prisma:
+        specifier: ^6.16.3
+        version: 6.17.1(typescript@5.9.3)
       tailwindcss:
         specifier: ^4.1.14
         version: 4.1.14
